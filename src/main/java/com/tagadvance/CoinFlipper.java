@@ -2,16 +2,16 @@ package com.tagadvance;
 
 import java.util.Random;
 
+import com.google.common.base.Preconditions;
+
 public class CoinFlipper {
 
 	private final Random random;
 
 	public CoinFlipper(Random random) {
 		super();
-		if (random == null) {
-			throw new NullPointerException("random must not be null");
-		}
-		this.random = random;
+		this.random = Preconditions.checkNotNull(random,
+				"random must not be null");
 	}
 
 	public int flip(int times) {

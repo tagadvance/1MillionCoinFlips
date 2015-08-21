@@ -2,6 +2,8 @@ package com.tagadvance;
 
 import java.util.concurrent.Callable;
 
+import com.google.common.base.Preconditions;
+
 public class CoinFlipperCallable implements Callable<Integer> {
 
 	public static final int MIN_TIMES = 1;
@@ -11,14 +13,10 @@ public class CoinFlipperCallable implements Callable<Integer> {
 
 	public CoinFlipperCallable(CoinFlipper coinFlipper, int times) {
 		super();
-		if (coinFlipper == null) {
-			throw new NullPointerException("coinFlipper must not be null");
-		}
-		if (times < MIN_TIMES) {
-			throw new IllegalArgumentException("times must be at least "
-					+ MIN_TIMES);
-		}
-		this.coinFlipper = coinFlipper;
+		this.coinFlipper = Preconditions.checkNotNull(coinFlipper,
+				"coinFlipper must not be null");
+		Preconditions.checkArgument(times >= MIN_TIMES,
+				"times must be at least " + MIN_TIMES);
 		this.times = times;
 	}
 
