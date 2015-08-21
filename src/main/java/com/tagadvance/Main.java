@@ -24,9 +24,9 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException,
 			ExecutionException {
 		int iterations = DEFAULT_ITERATIONS;
-		if (args.length > 1) {
+		if (args.length > 0) {
 			try {
-				iterations = Integer.parseInt(args[1]);
+				iterations = Integer.parseInt(args[0]);
 			} catch (NumberFormatException e) {
 				throw new IllegalArgumentException(
 						"iterations must be an integer", e);
