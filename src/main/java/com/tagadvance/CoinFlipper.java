@@ -1,3 +1,5 @@
+package com.tagadvance;
+
 import java.util.Random;
 
 public class CoinFlipper {

@@ -1,3 +1,5 @@
+package com.tagadvance;
+
 public enum Coin {
 
 	HEADS, TAILS;

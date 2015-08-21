@@ -1,3 +1,5 @@
+package com.tagadvance;
+
 import java.util.concurrent.Callable;
 
 public class CoinFlipperCallable implements Callable<Integer> {
