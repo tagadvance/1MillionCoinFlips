@@ -12,21 +12,32 @@ import java.util.concurrent.TimeUnit;
 /**
  * 
  * @author Tag <tagadvance@gmail.com>
- * @see https://www.reddit.com/r/askscience/comments/3hp4ig/if_i_flip_a_coin_1000000_times_what_are_the_odds/
+ * @see https://www.reddit.com/r/askscience/comments/3hp4ig/
+ *      if_i_flip_a_coin_1000000_times_what_are_the_odds/
  */
 public class Main {
 
-	public static final int COIN_FLIPS = 1000000, ITERATIONS = 10000;
+	public static final int COIN_FLIPS = 1000000, DEFAULT_ITERATIONS = 10000;
 	public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
 
 	public static void main(String[] args) throws InterruptedException,
 			ExecutionException {
+		int iterations = DEFAULT_ITERATIONS;
+		if (args.length > 1) {
+			try {
+				iterations = Integer.parseInt(args[1]);
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(
+						"iterations must be an integer", e);
+			}
+		}
+
 		long timeStart = System.currentTimeMillis();
 
 		List<Future<Integer>> futures = new ArrayList<>();
 
 		ExecutorService service = createScalableExecutorService();
-		for (int i = 0; i < ITERATIONS; i++) {
+		for (int i = 0; i < iterations; i++) {
 			Random random = new Random();
 			CoinFlipper coinFlipper = new CoinFlipper(random);
 			CoinFlipperCallable callable = new CoinFlipperCallable(coinFlipper,
@@ -45,7 +56,7 @@ public class Main {
 			}
 		}
 
-		BigDecimal divisor = BigDecimal.valueOf(ITERATIONS);
+		BigDecimal divisor = BigDecimal.valueOf(iterations);
 		int scale = 4;
 		BigDecimal chance = zeroSum
 				.divide(divisor, scale, RoundingMode.HALF_UP);
